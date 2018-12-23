@@ -105,7 +105,11 @@ def _reslove(url):
             )
         # except requests.exceptions.Timeout:
         except requests.ReadTimeout:
-            return None
+            _tips_msg('request read timeout')
+            return
+        except requests.exceptions.SSLError:
+            _tips_msg('request error')
+            return
         if result.status_code in (requests.codes.NOT_FOUND,
                                   requests.codes.forbidden):
             return _emergency_reslove(url)
@@ -116,21 +120,19 @@ def _reslove(url):
 
 
 def _local_resolve(url):
-    # None --> can't reslove
     # False --> can't local relosve
     # True --> can local reslove
     try:
         r = requests.head(url, timeout=2)
-    except requests.ConnectionError:
-        return None
-    except (requests.ConnectTimeout, requests.ReadTimeout):
+    except (requests.ConnectionError, requests.ConnectTimeout,
+            requests.ReadTimeout):
         return False
     return True
 
 
 def resolve_process(url):
-    if _local_resolve == None:
-        return None
+    # if _local_resolve(url) == None:
+    #     return None
     if not _local_resolve(url):
         _set_proxy()
     result = _reslove(url)
@@ -156,7 +158,7 @@ def _tips_msg(tips):
     print(tips)
 
 
-def _get_title_index(url):
+def _get_title_link(url):
     if not is_validURL(url):
         _tips_msg('Check the URL again (eg: http://www.google.com/)')
         return None
@@ -167,8 +169,8 @@ def _get_title_index(url):
         else:
             _tips_msg('`link` can\'t resolve')
             return None
-        format_index = FORMAT_SCHEME['link'].format(title=title, url=url)
-    return format_index
+        format_link = FORMAT_SCHEME['link'].format(title=title, url=url)
+    return format_link
 
 
 def _get_comment(comment):
@@ -247,10 +249,7 @@ def export_format(link, date, comment, codes, args):
             with open(file_path, 'a') as f:
                 f.write(output_string + '\n')
                 _tips_msg('success: store in ' + '`' + str(file_path) + '`')
-        except FileNotFoundError as e:
-            _tips_msg('save error')
-            _tips_msg(e)
-        except PermissionError as e:
+        except (FileNotFoundError, PermissionError) as e:
             _tips_msg('save error')
             _tips_msg(e)
 
@@ -263,14 +262,12 @@ def qkmd(args):
     if url and title:
         format_link = FORMAT_SCHEME['link'].format(title=title, url=url)
     else:
-        format_link = _get_title_index(url)
+        format_link = _get_title_link(url)
 
     if format_link:
-        date = args['date']
-        format_date = _get_date(date)
+        format_date = _get_date(args['date'])
 
-        comment = args['comment']
-        format_comment = _get_comment(comment)
+        format_comment = _get_comment(args['comment'])
 
         language, file_path = args['language'], args['source']
         format_codes = _get_codes(language, file_path)
