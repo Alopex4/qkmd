@@ -149,7 +149,9 @@ def is_validURL(url):
 
 def get_title(page):
     html = pq(page)
-    title = html.find("title").html().strip()
+    title = html.find("title").html()
+    if title:
+        title = title.strip()
     return title
 
 
