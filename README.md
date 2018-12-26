@@ -12,9 +12,9 @@ The `qkmd` is for you, you can just give it a link(URL) then the webpage title w
 
 ## [Prerequisites](#Prerequisites)
 
-If you live in the [resource blocked area](https://www.wikiwand.com/en/Great_Firewall) or [Internet censorship area](https://www.wikiwand.com/en/Internet_censorship) , please consider setting setting the proxy first to ensure you can browse the webpage first.
+If you live in the [resource blocked area](https://www.wikiwand.com/en/Great_Firewall) or [Internet censorship area](https://www.wikiwand.com/en/Internet_censorship) , please consider setting a proxy first.
 
-1. Install the porxy software, assure you can use browser to open the webpage first
+1. Install the porxy software, assure you can use browser to open the webpage
 
 2. Install `polipo`
 
