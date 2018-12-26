@@ -39,11 +39,14 @@ The `qkmd` default proxy port number is 8123.
 ## [Installing](#Installing)
 
 Assure you python version is >= 3.4
+```bash
+$ pip install qkmd
+```
+or
 
 ```bash
 $ python3 setup.py install
 ```
-
 or
 
 ```bash
@@ -84,7 +87,7 @@ Here is a simple way to reduce your time and simplify your operation.
 Assure you always want to store the file to `$HOME/mark.md` and highlight the code
 
 ```bash
-alias mark='function mark(){ qkdm $* -o ~/mark.md -C;}; mark'
+alias mark='function mark(){ qkmd $* -o ~/mark.md -C;}; mark'
 ```
 
 ## [Authors](#Authors)
@@ -93,4 +96,4 @@ alias mark='function mark(){ qkdm $* -o ~/mark.md -C;}; mark'
 
 ## [License](#License)
 
-* This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+* This project is licensed under the MIT License - see the [LICENSE](https://github.com/Alopex4/qkmd/blob/master/LICENSE) file for details
