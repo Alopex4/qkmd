@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+    Quick markdown what you need, just via a link.
+"""
+
+
 import os
 import re
 import email
@@ -16,7 +21,7 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.terminal import TerminalFormatter
 
-__version__ = 0.1
+from . import __version__
 
 USER_AGENTS = (
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0',
@@ -82,8 +87,11 @@ def get_verify(url):
 
 
 def _emergency_reslove(url):
-    http = urllib3.PoolManager()
-    result = http.request('Get', url)
+    try:
+        http = urllib3.PoolManager()
+        result = http.request('Get', url, timeout=2.0)
+    except (urllib3.exceptions.SSLError, urllib3.exceptions.MaxRetryError):
+       return None
     if result.status == requests.codes.ok:
         return result.data
     else:
