@@ -1,5 +1,5 @@
 Pygments==2.2.0
 cssselect==1.0.3
-lxml==4.2.5
+lxml==4.6.2
 pyquery==1.4.0
 requests==2.20.1
